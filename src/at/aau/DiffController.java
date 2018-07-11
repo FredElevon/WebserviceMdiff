@@ -18,8 +18,6 @@ public class DiffController {
 
     @RequestMapping("/mdiff")
 
-
-
     public MDiff mdiff() {
         return new MDiff(counter.incrementAndGet(), String.format(template));
     }
