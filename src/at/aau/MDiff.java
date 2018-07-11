@@ -1,8 +1,9 @@
 package at.aau;
 
 public class MDiff {
-    
-    private final int private String actionType;
+
+
+    private final String actionType;
     private final int srcID;
     private final int srcStartLine;
     private final int srcStartLineOffset;
@@ -15,7 +16,7 @@ public class MDiff {
     private final int dstEndLine;
     private final int dstEndLineOffset;
 
-    public MDiff(String actionType, int srcID, int srcStartLine, int srcStartLineOffset, int srcEndLine, int srcEndLineOffset, int dstID, int dstStartLine, int dstStartLineOffset, int dstEndLine, int dstEndLineOffset) {
+    public MDiff(String actionType, int srcID, int srcStartLine, int srcStartLineOffset, int srcEndLine, int srcEndLineOffset, int dstID, int dstStartLine, int dstStartLineOffset, int dstEndLine, int dstEndLineOffset, int endLineOffset) {
         this.actionType =actionType;
         this.srcID =srcID;
         this.srcStartLine =srcStartLine;
@@ -30,11 +31,50 @@ public class MDiff {
         this.dstEndLineOffset =dstEndLineOffset;
     }
 
-    public long getId() {
-        return id;
+    public String getActionType() {
+        return actionType;
     }
 
-    public String getContent() {
-        return content;
+    public int getSrcID() {
+        return srcID;
     }
+
+    public int getSrcStartLine() {
+        return srcStartLine;
+    }
+
+    public int getSrcStartLineOffset() {
+        return srcStartLineOffset;
+    }
+
+    public int getSrcEndLine() {
+        return srcEndLine;
+    }
+
+    public int getSrcEndLineOffset() {
+        return srcEndLineOffset;
+    }
+
+    public int getDstID() {
+        return dstID;
+    }
+
+    public int getDstStartLine() {
+        return dstStartLine;
+    }
+
+    public int getDstStartLineOffset() {
+        return dstStartLineOffset;
+    }
+
+    public int getDstEndLine() {
+        return dstEndLine;
+    }
+
+    public int getDstEndLineOffset() {
+        return dstEndLineOffset;
+    }
+
+
+
 }

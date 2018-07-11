@@ -26,7 +26,7 @@ public class DiffController {
     private int dstEndLine = myList.get(0).getDstEndLine();
     private int dstEndLineOffset = myList.get(0).getDstEndLineOffset();
 
-    
+
     @RequestMapping("/mdiff")
 
     public MDiff mdiff() {
