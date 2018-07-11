@@ -13,13 +13,24 @@ import static at.aau.DiffMain.diffFiles;
 public class DiffController {
 
     List<DiffInfo> myList = diffFiles("originalFile.txt", "revisedFile.txt");
-    private String template = myList.get(0).getActionType();
-    private final AtomicLong counter = new AtomicLong();
+    private String actionType = myList.get(0).getActionType();
+    private int srcID = myList.get(0).getSrcID();
+    private int srcStartLine = myList.get(0).getSrcStartLine();
+    private int srcStartLineOffset = myList.get(0).getSrcStartLineOffset();
+    private int srcEndLine = myList.get(0).getSrcEndLine();
+    private int srcEndLineOffset = myList.get(0).getSrcEndLineOffset();
 
+    private int dstID = myList.get(0).getDstID();
+    private int dstStartLine = myList.get(0).getDstStartLine();
+    private int dstStartLineOffset = myList.get(0).getDstStartLineOffset();
+    private int dstEndLine = myList.get(0).getDstEndLine();
+    private int dstEndLineOffset = myList.get(0).getDstEndLineOffset();
+
+    
     @RequestMapping("/mdiff")
 
     public MDiff mdiff() {
-        return new MDiff(counter.incrementAndGet(), String.format(template));
+        return new MDiff(actionType, srcID,srcStartLine,srcStartLineOffset,srcStartLineOffset, srcEndLine,srcEndLineOffset,dstID,dstStartLine,dstStartLineOffset,dstEndLine,dstEndLineOffset);
     }
 
 }
