@@ -12,7 +12,10 @@ import static at.aau.DiffMain.diffFiles;
 @RestController
 public class DiffController {
 
-    List<DiffInfo> myList = diffFiles("originalFile.txt", "revisedFile.txt");
+    List<DiffInfo> myList = diffFiles("Textfiles/originalFile.txt", "TextFiles/revisedFile.txt");
+
+    for ()
+
     private String actionType = myList.get(0).getActionType();
     private int srcID = myList.get(0).getSrcID();
     private int srcStartLine = myList.get(0).getSrcStartLine();
