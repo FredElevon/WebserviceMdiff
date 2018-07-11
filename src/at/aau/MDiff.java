@@ -1,35 +1,74 @@
 package at.aau;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static at.aau.DiffMain.diffFiles;
+
 public class MDiff {
 
+    private String returnString;
 
-    private final String actionType;
-    private final int srcID;
-    private final int srcStartLine;
-    private final int srcStartLineOffset;
-    private final int srcEndLine;
-    private final int srcEndLineOffset;
+    private String actionType;
+    private int srcID;
+    private int srcStartLine;
+    private int srcStartLineOffset;
+    private int srcEndLine;
+    private int srcEndLineOffset;
 
-    private final int dstID;
-    private final int dstStartLine;
-    private final int dstStartLineOffset;
-    private final int dstEndLine;
-    private final int dstEndLineOffset;
+    private int dstID;
+    private int dstStartLine;
+    private int dstStartLineOffset;
+    private int dstEndLine;
+    private int dstEndLineOffset;
 
-    public MDiff(String actionType, int srcID, int srcStartLine, int srcStartLineOffset, int srcEndLine, int srcEndLineOffset, int dstID, int dstStartLine, int dstStartLineOffset, int dstEndLine, int dstEndLineOffset, int endLineOffset) {
-        this.actionType =actionType;
-        this.srcID =srcID;
-        this.srcStartLine =srcStartLine;
-        this.srcStartLineOffset =srcStartLineOffset;
-        this.srcEndLine =srcEndLine;
-        this.srcEndLineOffset =srcEndLineOffset;
+//    public MDiff(String actionType, int srcID, int srcStartLine, int srcStartLineOffset, int srcEndLine, int srcEndLineOffset, int dstID, int dstStartLine, int dstStartLineOffset, int dstEndLine, int dstEndLineOffset, int endLineOffset) {
+//        List<DiffInfo> myList = diffFiles("Textfiles/originalFile.txt", "TextFiles/revisedFile.txt");
+//        int j = myList.size()-1;
+//
+//        this.actionType =actionType;
+//        this.srcID =srcID;
+//        this.srcStartLine =srcStartLine;
+//        this.srcStartLineOffset =srcStartLineOffset;
+//        this.srcEndLine =srcEndLine;
+//        this.srcEndLineOffset =srcEndLineOffset;
+//
+//        this.dstID =dstID;
+//        this.dstStartLine =dstStartLine;
+//        this.dstStartLineOffset =dstStartLineOffset;
+//        this.dstEndLine =dstEndLine;
+//        this.dstEndLineOffset =dstEndLineOffset;
+//
+//
+//        for(int i = 0; i< j; i++) {
+//               actionType = myList.get(i).getActionType();
+//               srcID = myList.get(i).getSrcID();
+//               srcStartLine = myList.get(i).getSrcStartLine();
+//               srcStartLineOffset = myList.get(i).getSrcStartLineOffset();
+//               srcEndLine = myList.get(i).getSrcEndLine();
+//               srcEndLineOffset = myList.get(i).getSrcEndLineOffset();
+//
+//               dstID = myList.get(i).getDstID();
+//               dstStartLine = myList.get(i).getDstStartLine();
+//               dstStartLineOffset = myList.get(i).getDstStartLineOffset();
+//               dstEndLine = myList.get(i).getDstEndLine();
+//               dstEndLineOffset = myList.get(i).getDstEndLineOffset();
+//           }
+//    }
 
-        this.dstID =dstID;
-        this.dstStartLine =dstStartLine;
-        this.dstStartLineOffset =dstStartLineOffset;
-        this.dstEndLine =dstEndLine;
-        this.dstEndLineOffset =dstEndLineOffset;
+    public MDiff(String f1, String f2) {
+        List<DiffInfo> diffInfoList = diffFiles(f1,f2);
+
+        for (DiffInfo diffInfo: diffInfoList) {
+            returnString += diffInfoList.get(0).getActionType();
+        }
     }
+
+    private void addToString() {
+        returnString = returnString + actionType;
+        returnString = returnString + srcID;
+    }
+
 
     public String getActionType() {
         return actionType;
@@ -75,6 +114,7 @@ public class MDiff {
         return dstEndLineOffset;
     }
 
-
-
+    public String getReturnString() {
+        return returnString;
+    }
 }
