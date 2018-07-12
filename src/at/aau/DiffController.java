@@ -36,9 +36,10 @@ public class DiffController {
     }
 
     @RequestMapping("/mdiffmydata")
-    public List<DiffInfo> mdiffmydata(@RequestParam Map<String, String> requestParams {
-        String oriFile = requestParams.get("ori");
-        String revFile = requestParams.get("rev");
+    public List<DiffInfo> mdiffmydata(@RequestParam(value = "file", defaultValue = "originalFile.txt&revisedFile.txt") String file) {
+        int symbol = file.indexOf("&");
+        String oriFile = file.substring(0,symbol);
+        String revFile = file.substring(symbol+1);
 
         MDiff mDiff = new MDiff(0, "TextFiles/" + oriFile, "TextFiles/" + revFile);
         return mDiff.getDiffInfoList();
