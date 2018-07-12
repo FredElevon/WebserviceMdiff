@@ -6,19 +6,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
 public class DiffController {
 
     @RequestMapping(value = "/mdiff", params = "srcID")
-    public DiffInfo mdiff(@RequestParam(value="srcID", defaultValue="0") int srcID) {
+    public DiffInfo mdiff(@RequestParam(value = "srcID", defaultValue = "0") int srcID) {
         MDiff mDiff = new MDiff(0, "Textfiles/originalFile.txt", "TextFiles/revisedFile.txt");
         return mDiff.getDiffInfoList().get(srcID);
     }
 
     @RequestMapping("/mdiff")
-    public List<DiffInfo> mdiff()  {
+    public List<DiffInfo> mdiff() {
         MDiff mDiff = new MDiff(0, "Textfiles/originalFile.txt", "TextFiles/revisedFile.txt");
         return mDiff.getDiffInfoList();
         //        for (int i = 0; i < mDiff.getSize(); i++) {
@@ -32,5 +33,14 @@ public class DiffController {
 //        });  //.getReturnString()
 //        new MDiff("Textfiles/originalFile.txt", "TextFiles/revisedFile.txt");
 //        return "test"
+    }
+
+    @RequestMapping("/mdiffmydata")
+    public List<DiffInfo> mdiffmydata(@RequestParam Map<String, String> requestParams {
+        String oriFile = requestParams.get("ori");
+        String revFile = requestParams.get("rev");
+
+        MDiff mDiff = new MDiff(0, "TextFiles/" + oriFile, "TextFiles/" + revFile);
+        return mDiff.getDiffInfoList();
     }
 }
