@@ -85,6 +85,10 @@ public class DiffInfo {
         return dstEndLineOffset;
     }
 
+//    public String toString(){
+//     return "Waaaaaaaaaaaaaaaaaaaaaagh!";
+//    }
+
     public void setDstEndLineOffset(int dstEndLineOffset) {
         this.dstEndLineOffset = dstEndLineOffset;
     }

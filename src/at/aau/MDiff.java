@@ -1,6 +1,8 @@
 package at.aau;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import static at.aau.DiffMain.diffFiles;
@@ -57,16 +59,37 @@ public class MDiff {
 //    }
 
     public MDiff(String f1, String f2) {
-        List<DiffInfo> diffInfoList = diffFiles(f1,f2);
+        List<DiffInfo> diffInfoList = diffFiles(f1, f2);
 
-        for (DiffInfo diffInfo: diffInfoList) {
-            returnString += diffInfoList.get(0).getActionType();
+        for (DiffInfo diffInfo : diffInfoList) {
+//            returnString += diffInfoList;
+            addToString();
         }
     }
+
+
+//        Iterator<DiffInfo> iterator = diffInfoList.iterator();
+//        while (iterator.hasNext()) {
+//            System.out.println(iterator.next());
+//        }
+//
+//        for (int i = 1; i < diffInfoList.size(); i++) {
+//            returnString += diffInfoList.get(i).getActionType();
+//        }
+//    }
 
     private void addToString() {
         returnString = returnString + actionType;
         returnString = returnString + srcID;
+        returnString = returnString + srcStartLine;
+        returnString = returnString + srcStartLineOffset;
+        returnString = returnString + srcEndLine;
+        returnString = returnString + srcEndLineOffset;
+        returnString = returnString + dstID;
+        returnString = returnString + dstStartLine;
+        returnString = returnString + dstStartLineOffset;
+        returnString = returnString + dstEndLine;
+        returnString = returnString + dstEndLineOffset;
     }
 
 
