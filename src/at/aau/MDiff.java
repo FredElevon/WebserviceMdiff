@@ -7,9 +7,10 @@ import java.util.List;
 
 import static at.aau.DiffMain.diffFiles;
 
+
 public class MDiff {
 
-    private String returnString;
+    private String returnString = "";
 
     private String actionType;
     private int srcID;
@@ -24,6 +25,8 @@ public class MDiff {
     private int dstEndLine;
     private int dstEndLineOffset;
     private int i = 0;
+
+
 //    public MDiff(String actionType, int srcID, int srcStartLine, int srcStartLineOffset, int srcEndLine, int srcEndLineOffset, int dstID, int dstStartLine, int dstStartLineOffset, int dstEndLine, int dstEndLineOffset, int endLineOffset) {
 //        List<DiffInfo> myList = diffFiles("Textfiles/originalFile.txt", "TextFiles/revisedFile.txt");
 //        int j = myList.size()-1;
@@ -59,41 +62,36 @@ public class MDiff {
 //    }
 
     public MDiff(String f1, String f2) {
+
+
         List<DiffInfo> diffInfoList = diffFiles(f1, f2);
 
+
         for (DiffInfo diffInfo : diffInfoList) {
-            returnString += diffInfoList.get(i).getActionType();
-
-            returnString += diffInfoList.get(i).getSrcID();
-            returnString += diffInfoList.get(i).getSrcStartLine();
-            returnString += diffInfoList.get(i).getSrcStartLineOffset();
-            returnString += diffInfoList.get(i).getSrcEndLine();
-            returnString += diffInfoList.get(i).getSrcEndLineOffset();
-
-            returnString += diffInfoList.get(i).getDstID();
-            returnString += diffInfoList.get(i).getDstStartLine();
-            returnString += diffInfoList.get(i).getDstStartLineOffset();
-            returnString += diffInfoList.get(i).getDstEndLine();
-            returnString += diffInfoList.get(i).getDstEndLineOffset();
+            addToString(f1,f2);
             i++;
         }
 
     }
 
-//        Iterator<DiffInfo> iterator = diffInfoList.iterator();
-//        while (iterator.hasNext()) {
-//            System.out.println(iterator.next());
-//        }
-//
-//        for (int i = 1; i < diffInfoList.size(); i++) {
-//            returnString += diffInfoList.get(i).getActionType();
-//        }
-//    }
+    public void addToString(String f1, String f2) {
+        List<DiffInfo> diffInfoList = diffFiles(f1, f2);
 
-//    private void addToString(String f1, String f2) {
-//        returnString += actionType;
-//
-//    }
+        returnString += diffInfoList.get(i).getActionType();
+
+        returnString += diffInfoList.get(i).getSrcID();
+        returnString += diffInfoList.get(i).getSrcStartLine();
+        returnString += diffInfoList.get(i).getSrcStartLineOffset();
+        returnString += diffInfoList.get(i).getSrcEndLine();
+        returnString += diffInfoList.get(i).getSrcEndLineOffset();
+
+        returnString += diffInfoList.get(i).getDstID();
+        returnString += diffInfoList.get(i).getDstStartLine();
+        returnString += diffInfoList.get(i).getDstStartLineOffset();
+        returnString += diffInfoList.get(i).getDstEndLine();
+        returnString += diffInfoList.get(i).getDstEndLineOffset();
+
+    }
 
 
     public String getActionType() {
