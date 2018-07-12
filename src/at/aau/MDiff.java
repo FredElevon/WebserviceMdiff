@@ -26,6 +26,9 @@ public class MDiff {
     private int dstEndLineOffset;
     private int i = 0;
 
+//    private String f1;
+//    private String f2;
+
 
 //    public MDiff(String actionType, int srcID, int srcStartLine, int srcStartLineOffset, int srcEndLine, int srcEndLineOffset, int dstID, int dstStartLine, int dstStartLineOffset, int dstEndLine, int dstEndLineOffset, int endLineOffset) {
 //        List<DiffInfo> myList = diffFiles("Textfiles/originalFile.txt", "TextFiles/revisedFile.txt");
@@ -61,17 +64,33 @@ public class MDiff {
 //           }
 //    }
 
-    public MDiff(String f1, String f2) {
 
-
+    public MDiff(int x,  String f1, String f2) {
         List<DiffInfo> diffInfoList = diffFiles(f1, f2);
+
+//        this.f1 = f1;
+//        this.f2 = f2;
+
+        this.actionType = diffInfoList.get(x).getActionType();
 
 
         for (DiffInfo diffInfo : diffInfoList) {
-            addToString(f1,f2);
-            i++;
-        }
+//            addToString(f1,f2);
+//            i++;
+            this.actionType = diffInfoList.get(x).getActionType();
 
+            this.srcID = diffInfoList.get(x).getSrcID();
+            this.srcStartLine = diffInfoList.get(x).getSrcStartLine();
+            this.srcStartLineOffset = diffInfoList.get(x).getSrcStartLineOffset();
+            this.srcEndLine = diffInfoList.get(x).getSrcEndLine();
+            this.srcEndLineOffset = diffInfoList.get(x).getSrcEndLineOffset();
+
+            this.dstID = diffInfoList.get(x).getDstID();
+            this.dstStartLine = diffInfoList.get(x).getDstStartLine();
+            this.dstStartLineOffset = diffInfoList.get(x).getDstStartLineOffset();
+            this.dstEndLine = diffInfoList.get(x).getDstEndLine();
+            this.dstEndLineOffset = diffInfoList.get(x).getDstEndLineOffset();
+        }
     }
 
     public void addToString(String f1, String f2) {
@@ -90,7 +109,6 @@ public class MDiff {
         returnString += diffInfoList.get(i).getDstStartLineOffset();
         returnString += diffInfoList.get(i).getDstEndLine();
         returnString += diffInfoList.get(i).getDstEndLineOffset();
-
     }
 
 
@@ -138,7 +156,7 @@ public class MDiff {
         return dstEndLineOffset;
     }
 
-    public String getReturnString() {
-        return returnString;
-    }
+//    public String getReturnString() {
+//        return returnString;
+//    }
 }
