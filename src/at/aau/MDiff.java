@@ -23,7 +23,7 @@ public class MDiff {
     private int dstStartLineOffset;
     private int dstEndLine;
     private int dstEndLineOffset;
-
+    private int i = 0;
 //    public MDiff(String actionType, int srcID, int srcStartLine, int srcStartLineOffset, int srcEndLine, int srcEndLineOffset, int dstID, int dstStartLine, int dstStartLineOffset, int dstEndLine, int dstEndLineOffset, int endLineOffset) {
 //        List<DiffInfo> myList = diffFiles("Textfiles/originalFile.txt", "TextFiles/revisedFile.txt");
 //        int j = myList.size()-1;
@@ -62,11 +62,23 @@ public class MDiff {
         List<DiffInfo> diffInfoList = diffFiles(f1, f2);
 
         for (DiffInfo diffInfo : diffInfoList) {
-//            returnString += diffInfoList;
-            addToString();
-        }
-    }
+            returnString += diffInfoList.get(i).getActionType();
 
+            returnString += diffInfoList.get(i).getSrcID();
+            returnString += diffInfoList.get(i).getSrcStartLine();
+            returnString += diffInfoList.get(i).getSrcStartLineOffset();
+            returnString += diffInfoList.get(i).getSrcEndLine();
+            returnString += diffInfoList.get(i).getSrcEndLineOffset();
+
+            returnString += diffInfoList.get(i).getDstID();
+            returnString += diffInfoList.get(i).getDstStartLine();
+            returnString += diffInfoList.get(i).getDstStartLineOffset();
+            returnString += diffInfoList.get(i).getDstEndLine();
+            returnString += diffInfoList.get(i).getDstEndLineOffset();
+            i++;
+        }
+
+    }
 
 //        Iterator<DiffInfo> iterator = diffInfoList.iterator();
 //        while (iterator.hasNext()) {
@@ -78,19 +90,10 @@ public class MDiff {
 //        }
 //    }
 
-    private void addToString() {
-        returnString = returnString + actionType;
-        returnString = returnString + srcID;
-        returnString = returnString + srcStartLine;
-        returnString = returnString + srcStartLineOffset;
-        returnString = returnString + srcEndLine;
-        returnString = returnString + srcEndLineOffset;
-        returnString = returnString + dstID;
-        returnString = returnString + dstStartLine;
-        returnString = returnString + dstStartLineOffset;
-        returnString = returnString + dstEndLine;
-        returnString = returnString + dstEndLineOffset;
-    }
+//    private void addToString(String f1, String f2) {
+//        returnString += actionType;
+//
+//    }
 
 
     public String getActionType() {
