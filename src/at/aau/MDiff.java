@@ -10,6 +10,7 @@ import static at.aau.DiffMain.diffFiles;
 
 public class MDiff {
 
+    private final List<DiffInfo> diffInfoList;
     private String returnString = "";
 
     private String actionType;
@@ -65,32 +66,43 @@ public class MDiff {
 //    }
 
 
-    public MDiff(int x,  String f1, String f2) {
-        List<DiffInfo> diffInfoList = diffFiles(f1, f2);
+    public List<DiffInfo> getDiffInfoList() {
+        return diffInfoList;
+    }
+    public DiffInfo getDiffInfoList(int id) {
+        return diffInfoList.get(id);
+    }
+
+    public int getSize() {
+        return diffInfoList.size();
+    }
+
+    public MDiff(int x, String f1, String f2) {
+        this.diffInfoList = diffFiles(f1, f2);
 
 //        this.f1 = f1;
 //        this.f2 = f2;
 
-        this.actionType = diffInfoList.get(x).getActionType();
+//        this.actionType = diffInfoList.get(x).getActionType();
 
-
-        for (DiffInfo diffInfo : diffInfoList) {
-//            addToString(f1,f2);
-//            i++;
-            this.actionType = diffInfoList.get(x).getActionType();
-
-            this.srcID = diffInfoList.get(x).getSrcID();
-            this.srcStartLine = diffInfoList.get(x).getSrcStartLine();
-            this.srcStartLineOffset = diffInfoList.get(x).getSrcStartLineOffset();
-            this.srcEndLine = diffInfoList.get(x).getSrcEndLine();
-            this.srcEndLineOffset = diffInfoList.get(x).getSrcEndLineOffset();
-
-            this.dstID = diffInfoList.get(x).getDstID();
-            this.dstStartLine = diffInfoList.get(x).getDstStartLine();
-            this.dstStartLineOffset = diffInfoList.get(x).getDstStartLineOffset();
-            this.dstEndLine = diffInfoList.get(x).getDstEndLine();
-            this.dstEndLineOffset = diffInfoList.get(x).getDstEndLineOffset();
-        }
+//
+//        for (DiffInfo diffInfo : diffInfoList) {
+////            addToString(f1,f2);
+////            i++;
+//            this.actionType = diffInfoList.get(x).getActionType();
+//
+//            this.srcID = diffInfoList.get(x).getSrcID();
+//            this.srcStartLine = diffInfoList.get(x).getSrcStartLine();
+//            this.srcStartLineOffset = diffInfoList.get(x).getSrcStartLineOffset();
+//            this.srcEndLine = diffInfoList.get(x).getSrcEndLine();
+//            this.srcEndLineOffset = diffInfoList.get(x).getSrcEndLineOffset();
+//
+//            this.dstID = diffInfoList.get(x).getDstID();
+//            this.dstStartLine = diffInfoList.get(x).getDstStartLine();
+//            this.dstStartLineOffset = diffInfoList.get(x).getDstStartLineOffset();
+//            this.dstEndLine = diffInfoList.get(x).getDstEndLine();
+//            this.dstEndLineOffset = diffInfoList.get(x).getDstEndLineOffset();
+//        }
     }
 
     public void addToString(String f1, String f2) {
