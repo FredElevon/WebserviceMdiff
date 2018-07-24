@@ -1,8 +1,6 @@
 package at.aau;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,11 +33,18 @@ public class DiffController {
 //        return "test"
     }
 
-    @RequestMapping("/mdiffmydata")
-    public List<DiffInfo> mdiffmydata(@RequestParam(value = "file", defaultValue = "originalFile.txt&revisedFile.txt") String file) {
-        int symbol = file.indexOf("&");
-        String oriFile = file.substring(0,symbol);
-        String revFile = file.substring(symbol+1);
+    @RequestMapping(value="/mdiffmydata/{oriFile}/{revFile}", method = RequestMethod.GET)
+
+    public List<DiffInfo> mdiffmydata(@PathVariable("oriFile") String oriFile,
+                                      @PathVariable("revFile") String revFile) {
+
+//        @RequestParam(value = "file", defaultValue = "originalFile.txt&revisedFile.txt") String file
+
+//        int symbol = file.indexOf("q");
+//
+//        String oriFile = file.substring(0,symbol);
+//        String revFile = file.substring(symbol+1,file.length());
+
 
         MDiff mDiff = new MDiff(0, "TextFiles/" + oriFile, "TextFiles/" + revFile);
         return mDiff.getDiffInfoList();
