@@ -11,21 +11,21 @@ import static at.aau.DiffMain.diffFiles;
 public class MDiff {
 
     private final List<DiffInfo> diffInfoList;
-    private String returnString = "";
-
-    private String actionType;
-    private int srcID;
-    private int srcStartLine;
-    private int srcStartLineOffset;
-    private int srcEndLine;
-    private int srcEndLineOffset;
-
-    private int dstID;
-    private int dstStartLine;
-    private int dstStartLineOffset;
-    private int dstEndLine;
-    private int dstEndLineOffset;
-    private int i = 0;
+//    private String returnString = "";
+//
+//    private String actionType;
+//    private int srcID;
+//    private int srcStartLine;
+//    private int srcStartLineOffset;
+//    private int srcEndLine;
+//    private int srcEndLineOffset;
+//
+//    private int dstID;
+//    private int dstStartLine;
+//    private int dstStartLineOffset;
+//    private int dstEndLine;
+//    private int dstEndLineOffset;
+//    private int i = 0;
 
 //    private String f1;
 //    private String f2;
@@ -66,107 +66,85 @@ public class MDiff {
 //    }
 
 
+    public MDiff(String f1, String f2) {
+        this.diffInfoList = diffFiles(f1, f2);
+    }
+
     public List<DiffInfo> getDiffInfoList() {
         return diffInfoList;
     }
-    public DiffInfo getDiffInfoList(int id) {
-        return diffInfoList.get(id);
-    }
 
-    public int getSize() {
-        return diffInfoList.size();
-    }
 
-    public MDiff(int x, String f1, String f2) {
-        this.diffInfoList = diffFiles(f1, f2);
-
-//        this.f1 = f1;
-//        this.f2 = f2;
-
-//        this.actionType = diffInfoList.get(x).getActionType();
-
+//    public DiffInfo getDiffInfoList(int id) {
+//        return diffInfoList.get(id);
+//    }
 //
-//        for (DiffInfo diffInfo : diffInfoList) {
-////            addToString(f1,f2);
-////            i++;
-//            this.actionType = diffInfoList.get(x).getActionType();
+//    public int getSize() {
+//        return diffInfoList.size();
+//    }
 //
-//            this.srcID = diffInfoList.get(x).getSrcID();
-//            this.srcStartLine = diffInfoList.get(x).getSrcStartLine();
-//            this.srcStartLineOffset = diffInfoList.get(x).getSrcStartLineOffset();
-//            this.srcEndLine = diffInfoList.get(x).getSrcEndLine();
-//            this.srcEndLineOffset = diffInfoList.get(x).getSrcEndLineOffset();
+//    public void addToString(String f1, String f2) {
+//        List<DiffInfo> diffInfoList = diffFiles(f1, f2);
 //
-//            this.dstID = diffInfoList.get(x).getDstID();
-//            this.dstStartLine = diffInfoList.get(x).getDstStartLine();
-//            this.dstStartLineOffset = diffInfoList.get(x).getDstStartLineOffset();
-//            this.dstEndLine = diffInfoList.get(x).getDstEndLine();
-//            this.dstEndLineOffset = diffInfoList.get(x).getDstEndLineOffset();
-//        }
-    }
-
-    public void addToString(String f1, String f2) {
-        List<DiffInfo> diffInfoList = diffFiles(f1, f2);
-
-        returnString += diffInfoList.get(i).getActionType();
-
-        returnString += diffInfoList.get(i).getSrcID();
-        returnString += diffInfoList.get(i).getSrcStartLine();
-        returnString += diffInfoList.get(i).getSrcStartLineOffset();
-        returnString += diffInfoList.get(i).getSrcEndLine();
-        returnString += diffInfoList.get(i).getSrcEndLineOffset();
-
-        returnString += diffInfoList.get(i).getDstID();
-        returnString += diffInfoList.get(i).getDstStartLine();
-        returnString += diffInfoList.get(i).getDstStartLineOffset();
-        returnString += diffInfoList.get(i).getDstEndLine();
-        returnString += diffInfoList.get(i).getDstEndLineOffset();
-    }
-
-
-    public String getActionType() {
-        return actionType;
-    }
-
-    public int getSrcID() {
-        return srcID;
-    }
-
-    public int getSrcStartLine() {
-        return srcStartLine;
-    }
-
-    public int getSrcStartLineOffset() {
-        return srcStartLineOffset;
-    }
-
-    public int getSrcEndLine() {
-        return srcEndLine;
-    }
-
-    public int getSrcEndLineOffset() {
-        return srcEndLineOffset;
-    }
-
-    public int getDstID() {
-        return dstID;
-    }
-
-    public int getDstStartLine() {
-        return dstStartLine;
-    }
-
-    public int getDstStartLineOffset() {
-        return dstStartLineOffset;
-    }
-
-    public int getDstEndLine() {
-        return dstEndLine;
-    }
-
-    public int getDstEndLineOffset() {
-        return dstEndLineOffset;
-    }
+//        returnString += diffInfoList.get(i).getActionType();
+//
+//        returnString += diffInfoList.get(i).getSrcID();
+//        returnString += diffInfoList.get(i).getSrcStartLine();
+//        returnString += diffInfoList.get(i).getSrcStartLineOffset();
+//        returnString += diffInfoList.get(i).getSrcEndLine();
+//        returnString += diffInfoList.get(i).getSrcEndLineOffset();
+//
+//        returnString += diffInfoList.get(i).getDstID();
+//        returnString += diffInfoList.get(i).getDstStartLine();
+//        returnString += diffInfoList.get(i).getDstStartLineOffset();
+//        returnString += diffInfoList.get(i).getDstEndLine();
+//        returnString += diffInfoList.get(i).getDstEndLineOffset();
+//    }
+//
+//
+//    public String getActionType() {
+//        return actionType;
+//    }
+//
+//    public int getSrcID() {
+//        return srcID;
+//    }
+//
+//    public int getSrcStartLine() {
+//        return srcStartLine;
+//    }
+//
+//    public int getSrcStartLineOffset() {
+//        return srcStartLineOffset;
+//    }
+//
+//    public int getSrcEndLine() {
+//        return srcEndLine;
+//    }
+//
+//    public int getSrcEndLineOffset() {
+//        return srcEndLineOffset;
+//    }
+//
+//    public int getDstID() {
+//        return dstID;
+//    }
+//
+//    public int getDstStartLine() {
+//        return dstStartLine;
+//    }
+//
+//    public int getDstStartLineOffset() {
+//        return dstStartLineOffset;
+//    }
+//
+//    public int getDstEndLine() {
+//        return dstEndLine;
+//    }
+//
+//    public int getDstEndLineOffset() {
+//        return dstEndLineOffset;
+//    }
 
 //    public String getReturnString() {
 //        return returnString;

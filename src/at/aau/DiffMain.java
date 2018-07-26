@@ -34,18 +34,6 @@ public class DiffMain {
             System.out.println(delta.toString());
 
 
-
-//            int u = delta.getOriginal().toString().substring(2).indexOf("[") + 3; // start quo. ori.
-//            int v = delta.getOriginal().toString().length() - 2; // end quo. ori.
-//            diffInfo.setSrcEndLineOffset(delta.getOriginal().toString().substring(u,v).length());
-//            diffInfo.setSrcEndLineOffset(original.get(original.size()-1).length());
-
-//            int s = delta.getRevised().toString().substring(2).indexOf("[") + 3; //start quotation revised content
-//            int t = delta.getRevised().toString().length() - 2; //end quotation revised content
-//            diffInfo.setDstEndLineOffset(delta.getRevised().toString().substring(s,t).length());
-//            diffInfo.setDstEndLineOffset(revised.get(revised.size()-1).length());
-
-
             if (delta.getType().equals(Delta.TYPE.CHANGE)) {
                 diffInfo.setActionType("UPDATE");
             } else if (delta.getType().equals(Delta.TYPE.INSERT)) {
@@ -65,14 +53,21 @@ public class DiffMain {
             diffInfo.setDstID(i);
             diffInfo.setDstStartLine(delta.getRevised().getPosition());
 
-            diffInfo.setSrcEndLineOffset(original.get(delta.getOriginal().getPosition()).length());
+            List originalLines = delta.getOriginal().getLines();
+            if (!originalLines.isEmpty()) {
+                diffInfo.setSrcEndLineOffset(originalLines.get(originalLines.size() - 1).toString().length());
+            }
+
+            List revisedLines = delta.getRevised().getLines();
+            if (!revisedLines.isEmpty()) {
+                diffInfo.setDstEndLineOffset((revisedLines.get(revisedLines.size() - 1).toString().length()));
+            }
+
 
             if (diffInfo.getActionType().equals("DELETE")) {
                 diffInfo.setDstEndLine(delta.getRevised().size() + delta.getRevised().getPosition());
-                diffInfo.setDstEndLineOffset(0);
             } else {
                 diffInfo.setDstEndLine(delta.getRevised().size() - 1 + delta.getRevised().getPosition());
-                diffInfo.setDstEndLineOffset(revised.get(delta.getRevised().getPosition()).length());
             }
 
 

@@ -1,10 +1,10 @@
 package at.aau;
 
+import at.aau.DiffMatchPatch.Dmp;
+import at.aau.DiffMatchPatch.diff_match_patch;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 
 @RestController
@@ -12,13 +12,13 @@ public class DiffController {
 
     @RequestMapping(value = "/mdiff", params = "srcID")
     public DiffInfo mdiff(@RequestParam(value = "srcID", defaultValue = "0") int srcID) {
-        MDiff mDiff = new MDiff(0, "Textfiles/originalFile.txt", "TextFiles/revisedFile.txt");
+        MDiff mDiff = new MDiff("Textfiles/originalFile.txt", "TextFiles/revisedFile.txt");
         return mDiff.getDiffInfoList().get(srcID);
     }
 
     @RequestMapping("/mdiff")
     public List<DiffInfo> mdiff() {
-        MDiff mDiff = new MDiff(0, "Textfiles/originalFile.txt", "TextFiles/revisedFile.txt");
+        MDiff mDiff = new MDiff("Textfiles/originalFile.txt", "TextFiles/revisedFile.txt");
         return mDiff.getDiffInfoList();
         //        for (int i = 0; i < mDiff.getSize(); i++) {
 //            DiffInfo diffInfoList = mDiff.getDiffInfoList(i);
@@ -33,20 +33,22 @@ public class DiffController {
 //        return "test"
     }
 
-    @RequestMapping(value="/mdiffmydata/{oriFile}/{revFile}", method = RequestMethod.GET)
+    @RequestMapping(value = "/mdiffmydata/{oriFile}/{revFile}", method = RequestMethod.GET)
 
     public List<DiffInfo> mdiffmydata(@PathVariable("oriFile") String oriFile,
                                       @PathVariable("revFile") String revFile) {
 
-//        @RequestParam(value = "file", defaultValue = "originalFile.txt&revisedFile.txt") String file
-
-//        int symbol = file.indexOf("q");
-//
-//        String oriFile = file.substring(0,symbol);
-//        String revFile = file.substring(symbol+1,file.length());
-
-
-        MDiff mDiff = new MDiff(0, "TextFiles/" + oriFile, "TextFiles/" + revFile);
+        MDiff mDiff = new MDiff("TextFiles/" + oriFile, "TextFiles/" + revFile);
         return mDiff.getDiffInfoList();
+    }
+
+    @RequestMapping(value = "/dmpdata/{oriFile}/{revFile}/{cleanUp}", method = RequestMethod.GET)
+
+    public List<DiffInfo> dmp(@PathVariable("oriFile") String oriFile,
+                                           @PathVariable("revFile") String revFile,
+                                           @PathVariable("cleanUp") int cleanUp) {
+
+        Dmp dmp = new Dmp("TextFiles/" + oriFile, "TextFiles/" + revFile, cleanUp);
+        return dmp.getDmpInfoList();
     }
 }
