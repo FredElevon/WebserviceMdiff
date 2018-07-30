@@ -3,6 +3,7 @@ package at.aau.DiffMatchPatch;
 import at.aau.DiffInfo;
 import at.aau.DiffMatchPatch.diff_match_patch;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,65 +21,62 @@ public class DmpMain {
     private List<String> srcList;
     private List<String> dstList;
 
+    static ArrayList<Integer> newlinePos;
+
+    public ArrayList<Integer> getNewlinePos() {
+        return newlinePos;
+    }
+
     public static List<String> fileToLines(String fileName) {
         ArrayList<String> liste = new ArrayList<>();
 
         Path path = Paths.get(fileName);
         try (Stream<String> lines = Files.lines(path)) {
             lines.forEach(liste::add);
-        }  catch (IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Can not read file: " + fileName);
         }
         return liste;
     }
 
-    private void readFile(String src, String dst) {
-//        try (FileInputStream inputStream = new FileInputStream(src)) {
+//    private void readFileToString(String srcFilename, String dstFilename) {
+//        try (FileInputStream inputStream = new FileInputStream(srcFilename)) {
 //            String srcList = IOUtils.toString(inputStream);
-//            this.srcList = srcList;
+//            this.srcText = srcList;
 //        } catch (FileNotFoundException e) {
 //            e.printStackTrace();
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
 //
-//        try (FileInputStream inputStream = new FileInputStream(dst)) {
+//        try (FileInputStream inputStream = new FileInputStream(dstFilename)) {
 //            String dstList = IOUtils.toString(inputStream);
-//            this.dstList = dstList;
+//            this.dstText = dstList;
 //        } catch (FileNotFoundException e) {
 //            e.printStackTrace();
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        srcList = fileToLines(src);
-        dstList = fileToLines(dst);
+//    }
 
+    private void readFile(String srcFilename, String dstFilename) {
+
+        srcList = DmpMain.fileToLines(srcFilename);
+        dstList = DmpMain.fileToLines(dstFilename);
     }
 
 
-    public static List<DiffInfo> diffFiles(String srcFilename, String dstFilename, int cleanup) {
-        DmpMain dmpMain = new DmpMain();
-        dmpMain.readFile(srcFilename, dstFilename);
+    public List<DiffInfo> diffFiles(String srcFilename, String dstFilename, int cleanup) {
+        this.readFile(srcFilename, dstFilename);
 
         diff_match_patch dmp = new diff_match_patch();
 
-        System.out.println(dmpMain.srcList.get(1));
+        System.out.println(this.srcList.get(1));
 
-
-        LinkedList<diff_match_patch.Diff> dpmListe;
-
-
-
-//        int diffListSize;
-//        if (dmpMain.srcList.size() < dmpMain.dstList.size()) {
-//            diffListSize = dmpMain.dstList.size();
-//        } else {
-//            diffListSize = dmpMain.srcList.size();
-//        }
 
         ArrayList<DiffInfo> diffList = new ArrayList<>();
 
-        LinkedList<diff_match_patch.Diff> fullDiff = dmp.diff_main(String.join("\n", dmpMain.srcList), String.join("\n", dmpMain.dstList));
+        LinkedList<diff_match_patch.Diff> fullDiff = dmp.diff_main(String.join("\n", srcList), String.join("\n", dstList));
 
         switch (cleanup) {
             case 1:
@@ -92,38 +90,82 @@ public class DmpMain {
                 break;
         }
 
+
+
         int fullDiffSize = fullDiff.size();
+        newlinePos = new ArrayList<>();
 
-        for (int i = 0; i <= fullDiffSize; i++) {
-            DiffInfo diffInfo = new DiffInfo();
+        Integer srcZeile = 1;
+        Integer srcOffset = 0;
 
-            dpmListe = dmp.diff_main(dmpMain.srcList.get(i), dmpMain.dstList.get(i));
+        Integer dstZeile = 1;
+        Integer dstOffset = 0;
 
-            // Is cleanup Parameter set and what type
+        int id = 0;
+
+        for (int i = 0; i < fullDiffSize; i++) {
+
+            DiffInfo diffInfo;
+            diffInfo = new DiffInfo();
 
 
-            // Convert LinkedList(dmpListe) to ArrayList
-            ArrayList<diff_match_patch.Diff> dmpArrayList = new ArrayList<>(dpmListe);
 
-            for (diff_match_patch.Diff diff : dmpArrayList) {
-                switch (diff.operation) {
-                    case EQUAL:
-                        break;
-                    case DELETE:
-                        diffInfo.setActionType("DELETE");
-                        break;
-                    case INSERT:
-                        diffInfo.setActionType("INSERT");
-                        break;
-                    default:
-                        System.out.println("Failed to setActionType: DmpMain, Line ca. 103-113");
-                }
+//            for (String s : fullDiff.get(i).text.split("\n")) {
+//                System.out.println(s.length());
+//                newlinePos.add(s.length());
+//            }
 
+
+//            for (int j = -1; (j = fullDiff.get(i).text.indexOf("\n", j + 1)) != -1; j++) {
+//                System.out.println(j);
+//                newlinePos.add(j);
+//            }
+
+            switch (fullDiff.get(i).operation) {
+                case EQUAL:
+                    srcZeile += StringUtils.countMatches(fullDiff.get(i).text, "\n");
+                    dstZeile += StringUtils.countMatches(fullDiff.get(i).text, "\n");
+                    break;
+                case DELETE:
+
+                    diffInfo.setSrcStartLine(srcZeile);
+                    diffInfo.setSrcStartLineOffset(srcOffset);
+
+                    srcZeile += StringUtils.countMatches(fullDiff.get(i).text, "\n");
+
+                    diffInfo.setSrcEndLine(srcZeile);
+                    diffInfo.setSrcEndLineOffset(fullDiff.get(i).text.length() - StringUtils.countMatches(fullDiff.get(i).text, "\n"));
+
+                    // TODO Anzahl der Zeichen hinter letztem \n = endlineOffset
+
+
+                    diffInfo.setActionType("DELETE");
+
+                    diffList.add(diffInfo);
+                    break;
+                case INSERT:
+
+                    diffInfo.setDstStartLine(srcZeile);
+                    diffInfo.setDstStartLineOffset(srcOffset);
+
+                    dstZeile += StringUtils.countMatches(fullDiff.get(i).text, "\n");
+
+                    diffInfo.setDstEndLine(dstZeile);
+                    diffInfo.setDstEndLineOffset(fullDiff.get(i).text.length() - StringUtils.countMatches(fullDiff.get(i).text, "\n"));
+
+                    diffInfo.setActionType("INSERT");
+
+                    diffList.add(diffInfo);
+                    break;
+                default:
+                    System.out.println("Failed to setActionType: DmpMain, Line ca. 103-113");
             }
+
+
 
             diffInfo.setSrcID(i);
 
-            diffList.add(diffInfo);
+
         }
 
 
